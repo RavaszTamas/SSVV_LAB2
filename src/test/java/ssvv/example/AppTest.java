@@ -36,7 +36,7 @@ public class AppTest {
 
   @Test
   public void tc_1_AddStudentCorrectNameNotEmpty() {
-    controller.addStudent(new Student("1", "1", "name", 1));
+    controller.addStudent(new Student("1", "1", "Joseph", 1));
     Assert.assertEquals(controller.getNumberOfStudents(),1);
   }
 
