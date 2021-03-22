@@ -25,14 +25,14 @@ public class AppTest {
     repository = null;
     studentValidator = null;
     controller = null;
-    File file = new File("files/test_students.txt");
-    file.delete();
+//    File file = new File("files/test_students.txt");
+//    file.delete();
   }
 
   @Before
   public void setUp() {
-    File file = new File("files/test_students.txt");
-    try { file.createNewFile(); } catch (IOException ignored) { }
+//    File file = new File("files/test_students.txt");
+//    try { file.createNewFile(); } catch (IOException ignored) { }
     repository = new StudentRepository("files/test_students.txt");
     studentValidator = new StudentValidator();
     controller = new StudentController(repository,studentValidator);
