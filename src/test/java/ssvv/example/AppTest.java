@@ -165,7 +165,7 @@ public class AppTest {
   @Test
   public void tc_1_wbt_AddAssignment_InvalidId() {
     controller.addAssignment(new Assignment("", "1", "1"));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
   @Test
   public void tc_2_wbt_AddAssignment_InvalidStudentId() {
