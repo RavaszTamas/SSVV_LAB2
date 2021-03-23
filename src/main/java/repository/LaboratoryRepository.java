@@ -1,17 +1,18 @@
 package repository;
 
+import model.LaboratoryProblem;
 import model.Student;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentRepository {
+public class LaboratoryRepository {
     private final String filename;
-    private final List<Student> students;
-    public StudentRepository(String filename) {
+    private final List<LaboratoryProblem> laboratoryProblems;
+    public LaboratoryRepository(String filename) {
         this.filename = filename;
-        students = new ArrayList<>();
+        laboratoryProblems = new ArrayList<>();
         loadFromFile();
     }
 
@@ -21,8 +22,8 @@ public class StudentRepository {
             String line;
             while ((line = bufferedReader.readLine()) != null)
             {
-                Student student = fromLine(line);
-                students.add(student);
+                LaboratoryProblem laboratoryProblem = fromLine(line);
+                laboratoryProblems.add(laboratoryProblem);
             }
 
         }
@@ -31,25 +32,25 @@ public class StudentRepository {
         }
     }
 
-    private Student fromLine(String line) {
+    private LaboratoryProblem fromLine(String line) {
         String[] params = line.split(",");
-        return new Student(params[0], params[1], params[2], Integer.parseInt(params[3]));
+        return new LaboratoryProblem(params[0], params[1], params[2]);
 
     }
 
 
-    public void saveEntity(Student student) {
-        students.add(student);
-        saveToFile(student);
+    public void saveEntity(LaboratoryProblem laboratoryProblem) {
+        laboratoryProblems.add(laboratoryProblem);
+        saveToFile(laboratoryProblem);
     }
 
-    public List<Student> getAll() {
-        return students;
+    public List<LaboratoryProblem> getAll() {
+        return laboratoryProblems;
     }
 
-    public void saveToFile(Student entity){
+    public void saveToFile(LaboratoryProblem laboratoryProblem){
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename, true))) {
-            bufferedWriter.write(entity.toString());
+            bufferedWriter.write(laboratoryProblem.toString());
             bufferedWriter.newLine();
         } catch (IOException exception) {
             throw new ValidationException(exception.getMessage());
@@ -57,7 +58,7 @@ public class StudentRepository {
     }
 
     public void deleteAll() {
-        students.clear();
+        laboratoryProblems.clear();
         writeToFile();
     }
 
@@ -66,7 +67,7 @@ public class StudentRepository {
      */
     public void writeToFile(){
         try (PrintWriter b = new PrintWriter(this.filename)) {
-            students.forEach(e -> b.println(e.toString()));
+            laboratoryProblems.forEach(e -> b.println(e.toString()));
         }
         catch (IOException exception) {
             throw new ValidationException(exception.getMessage());
