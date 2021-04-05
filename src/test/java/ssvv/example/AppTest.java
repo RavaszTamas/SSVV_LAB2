@@ -11,6 +11,7 @@ import org.junit.Test;
 import repository.AssignmentRepository;
 import repository.LaboratoryRepository;
 import repository.StudentRepository;
+import repository.ValidationException;
 import validator.AssignmentValidator;
 import validator.LaboratoryProblemValidator;
 import validator.StudentValidator;
@@ -26,7 +27,7 @@ public class AppTest {
   private Validator<LaboratoryProblem> laboratoryProblemValidator;
   private Validator<Assignment> assignmentValidator;
   private final int NUMBER_OF_INITIAL_STUDENTS = 3;
-  private final int NUMBER_OF_INITIAL_ASSIGNMENTS= 1;
+  private final int NUMBER_OF_INITIAL_ASSIGNMENTS = 1;
 
   @After
   public void tearDown() {
@@ -68,7 +69,7 @@ public class AppTest {
     controller.addLaboratoryProblem(new LaboratoryProblem("2", "description1", "name2"));
     controller.addLaboratoryProblem(new LaboratoryProblem("3", "description1", "name3"));
 
-    controller.addAssignment(new Assignment("1", "1","1"));
+    controller.addAssignment(new Assignment("1", "1", "1"));
   }
 
   @Test
@@ -167,9 +168,56 @@ public class AppTest {
     controller.addAssignment(new Assignment("", "1", "1"));
     Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
+
   @Test
   public void tc_2_wbt_AddAssignment_InvalidStudentId() {
     controller.addAssignment(new Assignment("2", "", "1"));
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_3_wbt_AddAssignment_NullId() {
+    controller.addAssignment(new Assignment(null, "1", "1"));
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_4_wbt_AddAssignment_NullStudentId() {
+    controller.addAssignment(new Assignment("2", null, "1"));
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_5_wbt_AddAssignment_InvalidLaboratoryProblemId() {
+    controller.addAssignment(new Assignment("2", "1", ""));
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_6_wbt_AddAssignment_NullLaboratoryProblemId() {
+    controller.addAssignment(new Assignment("2", "1", null));
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_7_wbt_AddAssignment_NonExitingStudentId() {
+    try {
+      controller.addAssignment(new Assignment("2", "1234", "1"));
+      Assert.fail();
+    } catch (ValidationException ex) {
+      Assert.assertTrue(true);
+    }
+    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_8_wbt_AddAssignment_NonExitingLaboratoryProblemId() {
+    try {
+      controller.addAssignment(new Assignment("2", "1", "1234"));
+      Assert.fail();
+    } catch (ValidationException ex) {
+      Assert.assertTrue(true);
+    }
     Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 }

@@ -9,10 +9,10 @@ import java.util.List;
 
 public class AssignmentRepository {
     private final String filename;
-    private final List<Assignment> laboratoryProblems;
+    private final List<Assignment> assignments;
     public AssignmentRepository(String filename) {
         this.filename = filename;
-        laboratoryProblems = new ArrayList<>();
+        assignments = new ArrayList<>();
         loadFromFile();
     }
 
@@ -23,7 +23,7 @@ public class AssignmentRepository {
             while ((line = bufferedReader.readLine()) != null)
             {
                 Assignment laboratoryProblem = fromLine(line);
-                laboratoryProblems.add(laboratoryProblem);
+                assignments.add(laboratoryProblem);
             }
 
         }
@@ -38,14 +38,18 @@ public class AssignmentRepository {
 
     }
 
+    public Assignment findById(String id)
+    {
+        return assignments.stream().filter(item-> item.getId().equals(id)).findFirst().orElse(null);
+    }
 
     public void saveEntity(Assignment laboratoryProblem) {
-        laboratoryProblems.add(laboratoryProblem);
+        assignments.add(laboratoryProblem);
         saveToFile(laboratoryProblem);
     }
 
     public List<Assignment> getAll() {
-        return laboratoryProblems;
+        return assignments;
     }
 
     public void saveToFile(Assignment laboratoryProblem){
@@ -58,7 +62,7 @@ public class AssignmentRepository {
     }
 
     public void deleteAll() {
-        laboratoryProblems.clear();
+        assignments.clear();
         writeToFile();
     }
 
@@ -67,7 +71,7 @@ public class AssignmentRepository {
      */
     public void writeToFile(){
         try (PrintWriter b = new PrintWriter(this.filename)) {
-            laboratoryProblems.forEach(e -> b.println(e.toString()));
+            assignments.forEach(e -> b.println(e.toString()));
         }
         catch (IOException exception) {
             throw new ValidationException(exception.getMessage());

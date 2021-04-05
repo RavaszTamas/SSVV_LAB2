@@ -1,5 +1,6 @@
 package repository;
 
+import model.Assignment;
 import model.Student;
 
 import java.io.*;
@@ -35,6 +36,10 @@ public class StudentRepository {
         String[] params = line.split(",");
         return new Student(params[0], params[1], params[2], Integer.parseInt(params[3]));
 
+    }
+    public Student findById(String id)
+    {
+        return students.stream().filter(item-> item.getID().equals(id)).findFirst().orElse(null);
     }
 
 

@@ -1,5 +1,6 @@
 package repository;
 
+import model.Assignment;
 import model.LaboratoryProblem;
 import model.Student;
 
@@ -46,6 +47,11 @@ public class LaboratoryRepository {
 
     public List<LaboratoryProblem> getAll() {
         return laboratoryProblems;
+    }
+
+    public LaboratoryProblem findById(String id)
+    {
+        return laboratoryProblems.stream().filter(item-> item.getID().equals(id)).findFirst().orElse(null);
     }
 
     public void saveToFile(LaboratoryProblem laboratoryProblem){

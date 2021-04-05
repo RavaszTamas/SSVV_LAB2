@@ -13,17 +13,20 @@ public class StudentValidator implements Validator<Student> {
      */
     @Override
     public void validate(Student entity) throws ValidationException {
+        if(entity.getID() == null){
+            throw new ValidationException("Id incorect!");
+        }
         if(entity.getID().equals("")){
             throw new ValidationException("Id incorect!");
         }
-        if(entity.getID() == null){
-            throw new ValidationException("Id incorect!");
+        if(entity.getName() == null){
+            throw new ValidationException("Incorrect name!");
         }
         if(entity.getName().equals("")){
             throw new ValidationException("Incorrect name!");
         }
-        if(entity.getName() == null){
-            throw new ValidationException("Incorrect name!");
+        if(entity.getAge() == null) {
+            throw new ValidationException("Incorrect group!");
         }
         if(entity.getAge() < 0) {
             throw new ValidationException("Incorrect group!");
@@ -31,13 +34,10 @@ public class StudentValidator implements Validator<Student> {
         if(entity.getAge() > 100) {
             throw new ValidationException("Incorrect group!");
         }
-        if(entity.getAge() == null) {
-            throw new ValidationException("Incorrect group!");
-        }
-        if(entity.getSerialNumber().equals("")){
+        if(entity.getSerialNumber() == null){
             throw new ValidationException("Incorrect serial number!");
         }
-        if(entity.getSerialNumber() == null){
+        if(entity.getSerialNumber().equals("")){
             throw new ValidationException("Incorrect serial number!");
         }
     }

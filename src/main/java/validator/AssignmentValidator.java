@@ -14,22 +14,22 @@ public class AssignmentValidator implements Validator<Assignment> {
      */
     @Override
     public void validate(Assignment entity) throws ValidationException {
-        if(entity.getId().equals("")){
-            throw new ValidationException("Id incorect!");
-        }
         if(entity.getId() == null){
             throw new ValidationException("Id incorect!");
         }
-        if(entity.getLaboratoryProblemId().equals("")){
-            throw new ValidationException("Incorrect name!");
+        if(entity.getId().equals("")){
+            throw new ValidationException("Id incorect!");
         }
         if(entity.getLaboratoryProblemId() == null){
             throw new ValidationException("Incorrect name!");
         }
-        if(entity.getStudentId().equals("")){
+        if(entity.getLaboratoryProblemId().equals("")){
             throw new ValidationException("Incorrect name!");
         }
         if(entity.getStudentId() == null){
+            throw new ValidationException("Incorrect name!");
+        }
+        if(entity.getStudentId().equals("")){
             throw new ValidationException("Incorrect name!");
         }
     }

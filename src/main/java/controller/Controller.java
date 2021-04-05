@@ -23,8 +23,7 @@ public class Controller {
       AssignmentRepository assignmentRepository,
       Validator<Student> studentValidator,
       Validator<LaboratoryProblem> laboratoryProblemValidator,
-      Validator<Assignment> assignmentValidator
-    ) {
+      Validator<Assignment> assignmentValidator) {
     this.studentRepository = studentRepository;
     this.laboratoryRepository = laboratoryRepository;
     this.assignmentRepository = assignmentRepository;
@@ -52,17 +51,27 @@ public class Controller {
   public void addAssignment(Assignment assignment) {
     try {
       assignmentValidator.validate(assignment);
-      assignmentRepository.saveEntity(assignment);
     } catch (ValidationException ignored) {
+      return;
     }
+
+    if (studentRepository.findById(assignment.getStudentId()) == null) {
+      throw new ValidationException("Student with id wasn't found");
+    }
+    if (laboratoryRepository.findById(assignment.getLaboratoryProblemId()) == null) {
+      throw new ValidationException("Student with id wasn't found");
+    }
+    assignmentRepository.saveEntity(assignment);
   }
 
   public int getNumberOfStudents() {
     return studentRepository.getAll().size();
   }
+
   public int getNumberOfAssignemnts() {
     return assignmentRepository.getAll().size();
   }
+
   public int getNumberOfLaboratoryProblems() {
     return laboratoryRepository.getAll().size();
   }
