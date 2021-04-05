@@ -231,4 +231,14 @@ public class AppTest {
     }
     assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
   }
+  @Test
+  public void tc_10_wbt_AddAssignment_ExistingAssignmentId() {
+    try {
+      controller.addAssignment(new Assignment("1", "2", "2"));
+      fail();
+    } catch (ValidationException ex) {
+      assertTrue(true);
+    }
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
 }

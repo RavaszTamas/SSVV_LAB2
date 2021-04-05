@@ -54,12 +54,15 @@ public class Controller {
     } catch (ValidationException ignored) {
       return;
     }
+    if (assignmentRepository.findById(assignment.getId()) != null) {
+      throw new ValidationException("Assignment with existing id!");
+    }
 
     if (studentRepository.findById(assignment.getStudentId()) == null) {
       throw new ValidationException("Student with id wasn't found");
     }
     if (laboratoryRepository.findById(assignment.getLaboratoryProblemId()) == null) {
-      throw new ValidationException("Student with id wasn't found");
+      throw new ValidationException("Laboratory problem with id wasn't found");
     }
     assignmentRepository.saveEntity(assignment);
   }
