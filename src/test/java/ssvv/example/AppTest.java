@@ -1,21 +1,22 @@
 package ssvv.example;
 
-import controller.Controller;
-import model.Assignment;
-import model.LaboratoryProblem;
-import model.Student;
+import ssvv.example.controller.Controller;
+import ssvv.example.model.Assignment;
+import ssvv.example.model.LaboratoryProblem;
+import ssvv.example.model.Student;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import repository.AssignmentRepository;
-import repository.LaboratoryRepository;
-import repository.StudentRepository;
-import repository.ValidationException;
-import validator.AssignmentValidator;
-import validator.LaboratoryProblemValidator;
-import validator.StudentValidator;
-import validator.Validator;
+import ssvv.example.repository.AssignmentRepository;
+import ssvv.example.repository.LaboratoryRepository;
+import ssvv.example.repository.StudentRepository;
+import ssvv.example.repository.ValidationException;
+import ssvv.example.validator.AssignmentValidator;
+import ssvv.example.validator.LaboratoryProblemValidator;
+import ssvv.example.validator.StudentValidator;
+import ssvv.example.validator.Validator;
+
+import static junit.framework.TestCase.*;
 
 /** Unit test for simple App. */
 public class AppTest {
@@ -75,149 +76,159 @@ public class AppTest {
   @Test
   public void tc_1_AddStudentCorrectNameNotEmpty() {
     controller.addStudent(new Student("4", "4", "Joseph", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   // actually tc_2 can't change now due to how testlink works...
   @Test
   public void tc_1_AddStudentCorrectNameEmpty() {
     controller.addStudent(new Student("4", "4", "", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_3_AddStudentIdCorrect() {
     controller.addStudent(new Student("4", "4", "Joseph", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_4_AddStudentIdEmpty() {
     controller.addStudent(new Student("", "4", "Joseph", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_5_AddStudentSerialNumberCorrect() {
     controller.addStudent(new Student("4", "4", "Joseph", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_6_AddStudentSerialNumberEmpty() {
     controller.addStudent(new Student("4", "", "Joseph", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_7_AddStudentAgeCorrect() {
     controller.addStudent(new Student("4", "4", "Joseph", 4));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_8_AddStudentAgeSmallerThanZero() {
     controller.addStudent(new Student("4", "4", "Joseph", -1));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_9_AddStudentAgeLargerThan100() {
     controller.addStudent(new Student("4", "4", "Joseph", 101));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_10_AddStudentBVA_Age_minusOne() {
     controller.addStudent(new Student("4", "4", "Joseph", -1));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_11_AddStudentBVA_Age_zero() {
     controller.addStudent(new Student("4", "4", "Joseph", 0));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_12_AddStudentBVA_Age_one() {
     controller.addStudent(new Student("4", "4", "Joseph", 1));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_13_AddStudentBVA_Age_99() {
     controller.addStudent(new Student("4", "4", "Joseph", 99));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_14_AddStudentBVA_Age_100() {
     controller.addStudent(new Student("4", "4", "Joseph", 100));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS + 1);
   }
 
   @Test
   public void tc_15_AddStudentBVA_Age_101() {
     controller.addStudent(new Student("4", "4", "Joseph", 101));
-    Assert.assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS);
   }
 
   @Test
   public void tc_1_wbt_AddAssignment_InvalidId() {
     controller.addAssignment(new Assignment("", "1", "1"));
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_2_wbt_AddAssignment_InvalidStudentId() {
     controller.addAssignment(new Assignment("2", "", "1"));
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_3_wbt_AddAssignment_NullId() {
     controller.addAssignment(new Assignment(null, "1", "1"));
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_4_wbt_AddAssignment_NullStudentId() {
     controller.addAssignment(new Assignment("2", null, "1"));
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_5_wbt_AddAssignment_InvalidLaboratoryProblemId() {
     controller.addAssignment(new Assignment("2", "1", ""));
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_6_wbt_AddAssignment_NullLaboratoryProblemId() {
     controller.addAssignment(new Assignment("2", "1", null));
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_7_wbt_AddAssignment_NonExitingStudentId() {
     try {
       controller.addAssignment(new Assignment("2", "1234", "1"));
-      Assert.fail();
+      fail();
     } catch (ValidationException ex) {
-      Assert.assertTrue(true);
+      assertTrue(true);
     }
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
 
   @Test
   public void tc_8_wbt_AddAssignment_NonExitingLaboratoryProblemId() {
     try {
       controller.addAssignment(new Assignment("2", "1", "1234"));
-      Assert.fail();
+      fail();
     } catch (ValidationException ex) {
-      Assert.assertTrue(true);
+      assertTrue(true);
     }
-    Assert.assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+  @Test
+  public void tc_9_wbt_AddAssignmentCorrectInput() {
+    try {
+      controller.addAssignment(new Assignment("2", "2", "2"));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
   }
 }

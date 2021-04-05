@@ -1,4 +1,4 @@
-package model;
+package ssvv.example.model;
 
 public class LaboratoryProblem {
     public String getID() {

@@ -1,13 +1,13 @@
-package controller;
+package ssvv.example.controller;
 
-import model.Assignment;
-import model.LaboratoryProblem;
-import model.Student;
-import repository.AssignmentRepository;
-import repository.LaboratoryRepository;
-import repository.StudentRepository;
-import repository.ValidationException;
-import validator.Validator;
+import ssvv.example.model.Assignment;
+import ssvv.example.model.LaboratoryProblem;
+import ssvv.example.model.Student;
+import ssvv.example.repository.AssignmentRepository;
+import ssvv.example.repository.LaboratoryRepository;
+import ssvv.example.repository.StudentRepository;
+import ssvv.example.repository.ValidationException;
+import ssvv.example.validator.Validator;
 
 public class Controller {
   StudentRepository studentRepository;

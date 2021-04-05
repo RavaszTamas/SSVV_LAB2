@@ -1,4 +1,4 @@
-package repository;
+package ssvv.example.repository;
 
 public class ValidationException extends RuntimeException    {
 

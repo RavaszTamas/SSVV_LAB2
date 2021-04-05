@@ -1,7 +1,7 @@
-package repository;
+package ssvv.example.repository;
 
 
-import model.Assignment;
+import ssvv.example.model.Assignment;
 
 import java.io.*;
 import java.util.ArrayList;

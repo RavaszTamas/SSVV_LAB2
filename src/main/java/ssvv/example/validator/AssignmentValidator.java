@@ -1,9 +1,8 @@
-package validator;
+package ssvv.example.validator;
 
 
-import model.Assignment;
-import model.Student;
-import repository.ValidationException;
+import ssvv.example.model.Assignment;
+import ssvv.example.repository.ValidationException;
 
 public class AssignmentValidator implements Validator<Assignment> {
 

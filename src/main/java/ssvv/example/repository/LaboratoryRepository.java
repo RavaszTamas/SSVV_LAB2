@@ -1,8 +1,6 @@
-package repository;
+package ssvv.example.repository;
 
-import model.Assignment;
-import model.LaboratoryProblem;
-import model.Student;
+import ssvv.example.model.LaboratoryProblem;
 
 import java.io.*;
 import java.util.ArrayList;

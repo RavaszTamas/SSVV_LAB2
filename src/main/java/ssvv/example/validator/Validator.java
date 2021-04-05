@@ -1,6 +1,6 @@
-package validator;
+package ssvv.example.validator;
 
-import repository.ValidationException;
+import ssvv.example.repository.ValidationException;
 
 public interface Validator<E> {
     /**
