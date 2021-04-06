@@ -25,6 +25,9 @@ public class LaboratoryProblem {
         Name = name;
     }
 
+    public String toString() {
+        return ID + "," + description + "," + Name ;
+    }
     public LaboratoryProblem(String ID, String description, String name) {
         this.ID = ID;
         this.description = description;

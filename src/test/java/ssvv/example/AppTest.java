@@ -1,20 +1,15 @@
 package ssvv.example;
 
-import ssvv.example.controller.Controller;
-import ssvv.example.model.Assignment;
-import ssvv.example.model.LaboratoryProblem;
-import ssvv.example.model.Student;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ssvv.example.repository.AssignmentRepository;
-import ssvv.example.repository.LaboratoryRepository;
-import ssvv.example.repository.StudentRepository;
-import ssvv.example.repository.ValidationException;
-import ssvv.example.validator.AssignmentValidator;
-import ssvv.example.validator.LaboratoryProblemValidator;
-import ssvv.example.validator.StudentValidator;
-import ssvv.example.validator.Validator;
+import ssvv.example.controller.Controller;
+import ssvv.example.model.Assignment;
+import ssvv.example.model.Grade;
+import ssvv.example.model.LaboratoryProblem;
+import ssvv.example.model.Student;
+import ssvv.example.repository.*;
+import ssvv.example.validator.*;
 
 import static junit.framework.TestCase.*;
 
@@ -23,22 +18,28 @@ public class AppTest {
   private StudentRepository studentRepository;
   private LaboratoryRepository laboratoryRepository;
   private AssignmentRepository assignmentRepository;
+  private GradeRepository gradeRepository;
   private Controller controller;
   private Validator<Student> studentValidator;
   private Validator<LaboratoryProblem> laboratoryProblemValidator;
   private Validator<Assignment> assignmentValidator;
-  private final int NUMBER_OF_INITIAL_STUDENTS = 3;
-  private final int NUMBER_OF_INITIAL_ASSIGNMENTS = 1;
+  private Validator<Grade> gradeValidator;
+  private final int NUMBER_OF_INITIAL_STUDENTS = 4;
+  private final int NUMBER_OF_INITIAL_ASSIGNMENTS = 2;
+  private final int NUMBER_OF_INITIAL_GRADES = 1;
 
   @After
   public void tearDown() {
     assignmentRepository.deleteAll();
     studentRepository.deleteAll();
     laboratoryRepository.deleteAll();
+    gradeRepository.deleteAll();
     studentRepository = null;
+    gradeRepository = null;
     studentValidator = null;
     laboratoryProblemValidator = null;
     assignmentValidator = null;
+    gradeValidator = null;
     controller = null;
     //    File file = new File("files/test_students.txt");
     //    file.delete();
@@ -51,26 +52,34 @@ public class AppTest {
     assignmentRepository = new AssignmentRepository("files/test_assignments.txt");
     laboratoryRepository = new LaboratoryRepository("files/test_laboratory_problems.txt");
     studentRepository = new StudentRepository("files/test_students.txt");
+    gradeRepository = new GradeRepository("files/test_grades.txt");
     studentValidator = new StudentValidator();
     laboratoryProblemValidator = new LaboratoryProblemValidator();
     assignmentValidator = new AssignmentValidator();
+    gradeValidator = new GradeValidator();
     controller =
         new Controller(
             studentRepository,
             laboratoryRepository,
             assignmentRepository,
+            gradeRepository,
             studentValidator,
             laboratoryProblemValidator,
-            assignmentValidator);
+            assignmentValidator,
+            gradeValidator);
     controller.addStudent(new Student("1", "1", "name1", 1));
     controller.addStudent(new Student("2", "2", "name2", 2));
     controller.addStudent(new Student("3", "3", "name3", 3));
+    controller.addStudent(new Student("31", "31", "name31", 31));
 
     controller.addLaboratoryProblem(new LaboratoryProblem("1", "description1", "name1"));
     controller.addLaboratoryProblem(new LaboratoryProblem("2", "description1", "name2"));
     controller.addLaboratoryProblem(new LaboratoryProblem("3", "description1", "name3"));
+    controller.addLaboratoryProblem(new LaboratoryProblem("31", "description31", "name31"));
 
     controller.addAssignment(new Assignment("1", "1", "1"));
+    controller.addGrade(new Grade("1", "1", 6));
+    controller.addAssignment(new Assignment("31", "31", "31"));
   }
 
   @Test
@@ -221,6 +230,7 @@ public class AppTest {
     }
     assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
   }
+
   @Test
   public void tc_9_wbt_AddAssignmentCorrectInput() {
     try {
@@ -229,8 +239,9 @@ public class AppTest {
     } catch (ValidationException ex) {
       fail();
     }
-    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS + 1);
   }
+
   @Test
   public void tc_10_wbt_AddAssignment_ExistingAssignmentId() {
     try {
@@ -240,5 +251,50 @@ public class AppTest {
       assertTrue(true);
     }
     assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS);
+  }
+
+  @Test
+  public void tc_1_BB_AddStudentCorrect() {
+    try {
+      controller.addStudent(new Student("4", "4", "Joseph", 20));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS+1);
+  }
+  @Test
+  public void tc_2_BB_AddAssignmentCorrect() {
+    try {
+      controller.addAssignment(new Assignment("2", "2", "2"));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
+  }
+  @Test
+  public void tc_3_BB_AddGradeCorrect() {
+    try {
+      controller.addGrade(new Grade("2", "31", 6));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfGrades(), NUMBER_OF_INITIAL_GRADES+1);
+  }
+  @Test
+  public void tc_4_integrationT_AddStudentAddGradeAddAssignmentCorrect() {
+    try {
+      controller.addStudent(new Student("4", "4", "Joseph", 20));
+      controller.addAssignment(new Assignment("2", "4", "2"));
+      controller.addGrade(new Grade("2", "2", 6));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfGrades(), NUMBER_OF_INITIAL_GRADES+1);
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS+1);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
   }
 }
