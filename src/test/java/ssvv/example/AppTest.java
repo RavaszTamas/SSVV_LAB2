@@ -297,4 +297,40 @@ public class AppTest {
     assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS+1);
     assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
   }
+  @Test
+  public void tc_1_incremental_integration_top_down_AddStudentCorrect() {
+    try {
+      controller.addStudent(new Student("4", "4", "Joseph", 20));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS+1);
+  }
+  @Test
+  public void tc_2_incremental_integration_top_down_AddAssignmentCorrect() {
+    try {
+      controller.addStudent(new Student("4", "4", "Joseph", 20));
+      controller.addAssignment(new Assignment("2", "4", "2"));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS+1);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
+  }
+  @Test
+  public void tc_3_incremental_integration_top_down_AddGradeCorrect() {
+    try {
+      controller.addStudent(new Student("4", "4", "Joseph", 20));
+      controller.addAssignment(new Assignment("2", "4", "2"));
+      controller.addGrade(new Grade("2", "2", 6));
+      assertTrue(true);
+    } catch (ValidationException ex) {
+      fail();
+    }
+    assertEquals(controller.getNumberOfStudents(), NUMBER_OF_INITIAL_STUDENTS+1);
+    assertEquals(controller.getNumberOfAssignemnts(), NUMBER_OF_INITIAL_ASSIGNMENTS+1);
+    assertEquals(controller.getNumberOfGrades(), NUMBER_OF_INITIAL_GRADES+1);
+  }
 }
